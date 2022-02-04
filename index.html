@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chess Online</title>
+    <script src="jquery.js"></script>
+  </head>
+  <style>
+    :root {
+        --background-color: #252738;
+        --primary-color: #5A69F9;
+        --secondary-color: #A3ACF7;
+        --primary-dark-color: #2B3378;
+        --secondary-dark-color: #8288C4;
+        --black-color: #000;
+        --white-color: #FFF;
+    }
+    @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+    html,
+    body {
+      margin: 0;
+      background-color: var(--background-color);
+      font-family: "Roboto", sans-serif;
+    }
+    .title-chess {
+      color: #fff;
+      text-align: center;
+    }
+    .table-chess {
+        margin: 0 auto;
+        border-collapse: collapse;
+    }
+    .table-chess td.box {
+        width: 50px;
+        height: 50px;
+        background-color: var(--secondary-color);
+        padding: 0;
+        text-align: center;
+        line-height: 50px;
+    }
+    .table-chess tr:nth-of-type(odd) td.box:nth-of-type(even) {
+        background-color: var(--primary-dark-color);
+    }
+    .table-chess tr:nth-of-type(even) td.box:nth-of-type(odd) {
+        background-color: var(--primary-dark-color);
+    }
+    .table-chess .frame-box {
+        width: 25px;
+        height: 25px;
+        line-height: 25px;
+        background-color: var(--secondary-dark-color);
+        text-align: center;
+        color: var(--black-color);
+        font-weight: 800;
+        font-size: 11px;
+    }
+    .table-chess .frame-box + .frame-box {
+        border-bottom: 1px solid var(--primary-dark-color);
+    }
+    .table-chess .frame-box + .box {
+        border-left: 1px solid var(--primary-dark-color);
+    }
+    .table-chess .frame-box ~ .box:nth-child(9) {
+        border-right: 1px solid var(--primary-dark-color);
+    }
+    .table-chess tr:last-child .frame-box + .frame-box  {
+        border-top: 1px solid var(--primary-dark-color);
+        border-bottom: transparent;
+    }
+    .table-chess .frame-box + .frame-box:last-child, .table-chess tr:last-child .frame-box + .frame-box:last-child {
+        border: transparent;
+    }
+    .piece {
+        height: 50px;
+        width: 50px;
+        margin: 0 auto;
+        background-position: center center!important;
+        background-repeat: no-repeat!important;
+        background-size: 40px!important;
+    }
+    .piece:hover, .piece.active {
+        background-color: var(--primary-color)!important;
+    }
+    .piece.black-tower {
+        background: url(imgs/pieces/tower.png);
+    }
+    .piece.black-horse {
+        background: url(imgs/pieces/horse.png);
+    }
+    .piece.black-bishop {
+        background: url(imgs/pieces/bishop.png);
+    }
+    .piece.black-king {
+        background: url(imgs/pieces/king.png);
+    }
+    .piece.black-queen {
+        background: url(imgs/pieces/queen.png);
+    }
+    .piece.black-pawn {
+        background: url(imgs/pieces/pawn.png);
+    }
+    .piece.white-tower {
+        background: url(imgs/pieces/tower_w.png);
+    }
+    .piece.white-horse {
+        background: url(imgs/pieces/horse_w.png);
+    }
+    .piece.white-bishop {
+        background: url(imgs/pieces/bishop_w.png);
+    }
+    .piece.white-king {
+        background: url(imgs/pieces/king_w.png);
+    }
+    .piece.white-queen {
+        background: url(imgs/pieces/queen_w.png);
+    }
+    .piece.white-pawn {
+        background: url(imgs/pieces/pawn_w.png);
+    }
+
+    
+  </style>
+  <body>
+    <h1 class="title-chess">Chess Online</h1>
+    <div class="content-table-chess">
+      <table class="table-chess">
+        <tbody>
+          <tr>
+            <td class="frame-box"></td>
+            <td class="frame-box">A</td>
+            <td class="frame-box">B</td>
+            <td class="frame-box">C</td>
+            <td class="frame-box">D</td>
+            <td class="frame-box">E</td>
+            <td class="frame-box">F</td>
+            <td class="frame-box">G</td>
+            <td class="frame-box">H</td>
+            <td class="frame-box"></td>
+          </tr>
+          <tr>
+            <td class="frame-box">8</td>
+            <td class="box"><div class="piece black-tower"></div></td>
+            <td class="box"><div class="piece black-horse"></div></td>
+            <td class="box"><div class="piece black-bishop"></div></td>
+            <td class="box"><div class="piece black-king"></div></td>
+            <td class="box"><div class="piece black-queen"></div></td>
+            <td class="box"><div class="piece black-bishop"></div></td>
+            <td class="box"><div class="piece black-horse"></div></td>
+            <td class="box"><div class="piece black-tower"></div></td>
+            <td class="frame-box">8</td>
+          </tr>
+          <tr>
+            <td class="frame-box">7</td>
+            <td class="box"><div class="piece black-pawn"></div></td>
+            <td class="box"><div class="piece black-pawn"></div></td>
+            <td class="box"><div class="piece black-pawn"></div></td>
+            <td class="box"><div class="piece black-pawn"></div></td>
+            <td class="box"><div class="piece black-pawn"></div></td>
+            <td class="box"><div class="piece black-pawn"></div></td>
+            <td class="box"><div class="piece black-pawn"></div></td>
+            <td class="box"><div class="piece black-pawn"></div></td>
+            <td class="frame-box">7</td>
+          </tr>
+          <tr>
+            <td class="frame-box">6</td>
+            <td class="box"></td>
+            <td class="box"></td>
+            <td class="box"></td>
+            <td class="box"></td>
+            <td class="box"></td>
+            <td class="box"></td>
+            <td class="box"></td>
+            <td class="box"></td>
+            <td class="frame-box">6</td>
+          </tr>
+          <tr>
+            <td class="frame-box">5</td>
+            <td class="box"></td>
+            <td class="box"></td>
+            <td class="box"></td>
+            <td class="box"></td>
+            <td class="box"></td>
+            <td class="box"></td>
+            <td class="box"></td>
+            <td class="box"></td>
+            <td class="frame-box">5</td>
+          </tr>
+          <tr>
+            <td class="frame-box">4</td>
+            <td class="box"></td>
+            <td class="box"></td>
+            <td class="box"></td>
+            <td class="box"></td>
+            <td class="box"></td>
+            <td class="box"></td>
+            <td class="box"></td>
+            <td class="box"></td>
+            <td class="frame-box">4</td>
+          </tr>
+          <tr>
+            <td class="frame-box">3</td>
+            <td class="box"></td>
+            <td class="box"></td>
+            <td class="box"></td>
+            <td class="box"></td>
+            <td class="box"></td>
+            <td class="box"></td>
+            <td class="box"></td>
+            <td class="box"></td>
+            <td class="frame-box">3</td>
+          </tr>
+          <tr>
+            <td class="frame-box">2</td>
+            <td class="box"><div class="piece white-pawn"></div></td>
+            <td class="box"><div class="piece white-pawn"></div></td>
+            <td class="box"><div class="piece white-pawn"></div></td>
+            <td class="box"><div class="piece white-pawn"></div></td>
+            <td class="box"><div class="piece white-pawn"></div></td>
+            <td class="box"><div class="piece white-pawn"></div></td>
+            <td class="box"><div class="piece white-pawn"></div></td>
+            <td class="box"><div class="piece white-pawn"></div></td>
+            <td class="frame-box">2</td>
+          </tr>
+          <tr>
+            <td class="frame-box">1</td>
+            <td class="box"><div class="piece white-tower"></div></td>
+            <td class="box"><div class="piece white-horse"></div></td>
+            <td class="box"><div class="piece white-bishop"></div></td>
+            <td class="box"><div class="piece white-king"></div></td>
+            <td class="box"><div class="piece white-queen"></div></td>
+            <td class="box"><div class="piece white-bishop"></div></td>
+            <td class="box"><div class="piece white-horse"></div></td>
+            <td class="box"><div class="piece white-tower"></div></td>
+            <td class="frame-box">1</td>
+          </tr>
+          <tr>
+            <td class="frame-box"></td>
+            <td class="frame-box">A</td>
+            <td class="frame-box">B</td>
+            <td class="frame-box">C</td>
+            <td class="frame-box">D</td>
+            <td class="frame-box">E</td>
+            <td class="frame-box">F</td>
+            <td class="frame-box">G</td>
+            <td class="frame-box">H</td>
+            <td class="frame-box"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <script>
+        $(function () {
+            $(document).on('click', '.piece', function () {
+                $('.piece').removeClass("active");
+                $(this).addClass("active");
+            });
+        });
+    </script>
+  </body>
+</html>
