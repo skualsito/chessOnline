@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chess Online</title>
     <script src="jquery.js"></script>
+    <script src="js/pieces/pawn.js"></script>
   </head>
   <style>
     :root {
@@ -16,6 +17,7 @@
         --secondary-dark-color: #8288C4;
         --black-color: #000;
         --white-color: #FFF;
+        --white-color-transparent: rgb(180, 79, 146);
     }
     @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
     html,
@@ -120,6 +122,9 @@
         background: url(imgs/pieces/pawn_w.png);
     }
 
+    .possiblemove {
+      background-color: var(--white-color-transparent)!important;
+    }
     
   </style>
   <body>
@@ -141,98 +146,98 @@
           </tr>
           <tr>
             <td class="frame-box">8</td>
-            <td class="box"><div class="piece black-tower"></div></td>
-            <td class="box"><div class="piece black-horse"></div></td>
-            <td class="box"><div class="piece black-bishop"></div></td>
-            <td class="box"><div class="piece black-king"></div></td>
-            <td class="box"><div class="piece black-queen"></div></td>
-            <td class="box"><div class="piece black-bishop"></div></td>
-            <td class="box"><div class="piece black-horse"></div></td>
-            <td class="box"><div class="piece black-tower"></div></td>
+            <td class="box" position="A8"><div class="piece black-tower"></div></td>
+            <td class="box" position="B8"><div class="piece black-horse"></div></td>
+            <td class="box" position="C8"><div class="piece black-bishop"></div></td>
+            <td class="box" position="D8"><div class="piece black-king"></div></td>
+            <td class="box" position="E8"><div class="piece black-queen"></div></td>
+            <td class="box" position="F8"><div class="piece black-bishop"></div></td>
+            <td class="box" position="G8"><div class="piece black-horse"></div></td>
+            <td class="box" position="H8"><div class="piece black-tower"></div></td>
             <td class="frame-box">8</td>
           </tr>
           <tr>
             <td class="frame-box">7</td>
-            <td class="box"><div class="piece black-pawn"></div></td>
-            <td class="box"><div class="piece black-pawn"></div></td>
-            <td class="box"><div class="piece black-pawn"></div></td>
-            <td class="box"><div class="piece black-pawn"></div></td>
-            <td class="box"><div class="piece black-pawn"></div></td>
-            <td class="box"><div class="piece black-pawn"></div></td>
-            <td class="box"><div class="piece black-pawn"></div></td>
-            <td class="box"><div class="piece black-pawn"></div></td>
+            <td class="box" position="A7"></td>
+            <td class="box" position="B7"></td>
+            <td class="box" position="C7"></td>
+            <td class="box" position="D7"></td>
+            <td class="box" position="E7"></td>
+            <td class="box" position="F7"></td>
+            <td class="box" position="G7"></td>
+            <td class="box" position="H7"></td>
             <td class="frame-box">7</td>
           </tr>
           <tr>
             <td class="frame-box">6</td>
-            <td class="box"></td>
-            <td class="box"></td>
-            <td class="box"></td>
-            <td class="box"></td>
-            <td class="box"></td>
-            <td class="box"></td>
-            <td class="box"></td>
-            <td class="box"></td>
+            <td class="box" position="A6"></td>
+            <td class="box" position="B6"></td>
+            <td class="box" position="C6"></td>
+            <td class="box" position="D6"></td>
+            <td class="box" position="E6"></td>
+            <td class="box" position="F6"></td>
+            <td class="box" position="G6"></td>
+            <td class="box" position="H6"></td>
             <td class="frame-box">6</td>
           </tr>
           <tr>
             <td class="frame-box">5</td>
-            <td class="box"></td>
-            <td class="box"></td>
-            <td class="box"></td>
-            <td class="box"></td>
-            <td class="box"></td>
-            <td class="box"></td>
-            <td class="box"></td>
-            <td class="box"></td>
+            <td class="box" position="A5"></td>
+            <td class="box" position="B5"></td>
+            <td class="box" position="C5"></td>
+            <td class="box" position="D5"></td>
+            <td class="box" position="E5"></td>
+            <td class="box" position="F5"></td>
+            <td class="box" position="G5"></td>
+            <td class="box" position="H5"></td>
             <td class="frame-box">5</td>
           </tr>
           <tr>
             <td class="frame-box">4</td>
-            <td class="box"></td>
-            <td class="box"></td>
-            <td class="box"></td>
-            <td class="box"></td>
-            <td class="box"></td>
-            <td class="box"></td>
-            <td class="box"></td>
-            <td class="box"></td>
+            <td class="box" position="A4"></td>
+            <td class="box" position="B4"></td>
+            <td class="box" position="C4"></td>
+            <td class="box" position="D4"></td>
+            <td class="box" position="E4"></td>
+            <td class="box" position="F4"></td>
+            <td class="box" position="G4"></td>
+            <td class="box" position="H4"></td>
             <td class="frame-box">4</td>
           </tr>
           <tr>
             <td class="frame-box">3</td>
-            <td class="box"></td>
-            <td class="box"></td>
-            <td class="box"></td>
-            <td class="box"></td>
-            <td class="box"></td>
-            <td class="box"></td>
-            <td class="box"></td>
-            <td class="box"></td>
+            <td class="box" position="A3"></td>
+            <td class="box" position="B3"></td>
+            <td class="box" position="C3"></td>
+            <td class="box" position="D3"></td>
+            <td class="box" position="E3"></td>
+            <td class="box" position="F3"></td>
+            <td class="box" position="G3"></td>
+            <td class="box" position="H3"></td>
             <td class="frame-box">3</td>
           </tr>
           <tr>
             <td class="frame-box">2</td>
-            <td class="box"><div class="piece white-pawn"></div></td>
-            <td class="box"><div class="piece white-pawn"></div></td>
-            <td class="box"><div class="piece white-pawn"></div></td>
-            <td class="box"><div class="piece white-pawn"></div></td>
-            <td class="box"><div class="piece white-pawn"></div></td>
-            <td class="box"><div class="piece white-pawn"></div></td>
-            <td class="box"><div class="piece white-pawn"></div></td>
-            <td class="box"><div class="piece white-pawn"></div></td>
+            <td class="box" position="A2"></td>
+            <td class="box" position="B2"></td>
+            <td class="box" position="C2"></td>
+            <td class="box" position="D2"></td>
+            <td class="box" position="E2"></td>
+            <td class="box" position="F2"></td>
+            <td class="box" position="G2"></td>
+            <td class="box" position="H2"></td>
             <td class="frame-box">2</td>
           </tr>
           <tr>
             <td class="frame-box">1</td>
-            <td class="box"><div class="piece white-tower"></div></td>
-            <td class="box"><div class="piece white-horse"></div></td>
-            <td class="box"><div class="piece white-bishop"></div></td>
-            <td class="box"><div class="piece white-king"></div></td>
-            <td class="box"><div class="piece white-queen"></div></td>
-            <td class="box"><div class="piece white-bishop"></div></td>
-            <td class="box"><div class="piece white-horse"></div></td>
-            <td class="box"><div class="piece white-tower"></div></td>
+            <td class="box" position="A1"><div class="piece white-tower"></div></td>
+            <td class="box" position="B1"><div class="piece white-horse"></div></td>
+            <td class="box" position="C1"><div class="piece white-bishop"></div></td>
+            <td class="box" position="D1"><div class="piece white-king"></div></td>
+            <td class="box" position="E1"><div class="piece white-queen"></div></td>
+            <td class="box" position="F1"><div class="piece white-bishop"></div></td>
+            <td class="box" position="G1"><div class="piece white-horse"></div></td>
+            <td class="box" position="H1"><div class="piece white-tower"></div></td>
             <td class="frame-box">1</td>
           </tr>
           <tr>
@@ -255,7 +260,29 @@
             $(document).on('click', '.piece', function () {
                 $('.piece').removeClass("active");
                 $(this).addClass("active");
+                let th = $(this);
+                whitePieces.find(e=>e.position == th.closest(".box").attr("position")).possibleMove();
             });
+
+            $(document).on('click', '.possiblemove', function () {
+                let th = $('.piece.active');
+                let th2 = $(this);
+                whitePieces.find(e=>e.position == th.closest(".box").attr("position")).move(th2.closest(".box").attr("position"));
+                console.log(whitePieces);
+            });
+
+            
+
+            let letters = ["A", "B", "C", "D", "E", "F", "G", "H"];
+            let whitePieces = [];
+            for (let i = 0; i < letters.length; i++) {
+              whitePieces.push(new Pawn($(`.box[position="${letters[i]}2"]`), `${letters[i]}2`, "white"))
+            }
+            for (let i = 0; i < letters.length; i++) {
+              whitePieces.push(new Pawn($(`.box[position="${letters[i]}7"]`), `${letters[i]}7`, "black"))
+            }
+            console.log(whitePieces);
+
         });
     </script>
   </body>
