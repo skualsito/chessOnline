@@ -1,5 +1,5 @@
 class Pawn {
-    constructor(position, color){
+    constructor(position, color, args){
         this.position = position;
         this.color = color;
        
@@ -10,9 +10,7 @@ class Pawn {
         this.item.className = `piece ${this.color}-pawn`;
         this.item.onclick = this.possibleMove.bind(this);
         document.querySelector(`.box[position="${this.position}"]`).appendChild(this.item);
-
-        this.letters = ["A", "B", "C", "D", "E", "F", "G", "H"];
-
+        this.chessClass = args;
         
         
     }
@@ -21,93 +19,74 @@ class Pawn {
         this.position = newposition;
         this.allpositions.push({position: this.position});
         document.querySelector(`.box[position="${this.position}"]`).appendChild(this.item);
-        this.removePossible();
-        
+        this.chessClass.removePossible();
+        this.chessClass.changePlayer();
     }
 
     possibleMove(){
-        this.removePossible();
-        switch (this.color) {
-            case "white":
+        if(this.chessClass.getPlayer() == this.color){
+            this.chessClass.removePossible();
+            this.possibleMoveProcess();
+            this.possibleKillProcess();
+        }
+    }
 
-                let arg = `${this.position[0]}${parseInt(this.position[1])+1}`;
-                let possibleMove = document.querySelector(`.box[position="${arg}"]`);
-                if(!possibleMove.firstChild){
-                    possibleMove.onclick = this.move.bind(this, arg);
-                    possibleMove.classList.add("possiblemove");
-                }
-                
+    possibleMoveProcess(){
+        let op = "+", initPosition = "2";
+        if(this.color != "white"){
+            op = "-";
+            initPosition = "7";
+        }
+        let quantly = (this.position[1] == initPosition) ? "2" : "1";
 
-                if(this.position[1] == 2) {
-                    arg = `${this.position[0]}${parseInt(this.position[1])+2}`;
-                    let possibleMove2 = document.querySelector(`.box[position="${arg}"]`);
-                    if(!possibleMove2.firstChild){
-                        possibleMove2.onclick = this.move.bind(this, arg);
-                        possibleMove2.classList.add("possiblemove");
-                    }
-                }
+        for (let i = 1; i <= parseInt(quantly); i++) {
+            let operation = op+i;
+            let arg = `${this.position[0]}${eval(parseInt(this.position[1])+operation)}`;
+            let possibleMove = document.querySelector(`.box[position="${arg}"]`);
+            if(!possibleMove.firstChild){
+                possibleMove.onclick = this.move.bind(this, arg);
+                possibleMove.classList.add("possiblemove");
+            }
+        }
+    }
 
-                let killLeft, killRight;
-                let searchLetter1 = this.letters.indexOf(this.position[0])-1;
-                if(searchLetter1 !== -1){
-                    arg = `${this.letters[searchLetter1]}${parseInt(this.position[1])+1}`;
-                    killLeft = document.querySelector(`.box[position="${arg}"]`);
-                    if(killLeft.firstChild){
-                        if(killLeft.firstChild.classList.value.indexOf("black") !== -1){
-                            killLeft.onclick = this.possibleKill.bind(this, arg);
-                            killLeft.classList.add("possiblekill");
-                        }
-                    }
-                }
-                    
-                let searchLetter2 = this.letters.indexOf(this.position[0])+1;
-                if(searchLetter2 !== -1){
-                    arg = `${this.letters[searchLetter2]}${parseInt(this.position[1])+1}`;
-                    killRight = document.querySelector(`.box[position="${arg}"]`);
-                    if(killRight.firstChild){
-                        if(killRight.firstChild.classList.value.indexOf("black") !== -1){
-                            killRight.onclick = this.possibleKill.bind(this, arg);
-                            killRight.classList.add("possiblekill");
-                        }
-                    }
-                    
-                }
-                    
-                    
-                
-            break;
+    possibleKillProcess(){
+        let positions = ["left", "right"];
+        let colorKill = "black", operator = "+";
+        if(this.color == "black"){
+            colorKill = "white";
+            operator = "-";
+        }
         
-            case "black":
-                if(this.position[1] == 7)
-                    document.querySelector(`.box[position="${this.position[0]}${parseInt(this.position[1])-2}"]`).classList.add("possiblemove");
-                    
-                document.querySelector(`.box[position="${this.position[0]}${parseInt(this.position[1])-1}"]`).classList.add("possiblemove");
-            break;
+        for (let p of positions) {
+            let op = (p == "left") ? "-1" : "+1";
+            let searchLetter = eval(this.chessClass.letters().indexOf(this.position[0])+op);
+            let letter = this.chessClass.letters()[searchLetter];
+            if(searchLetter !== -1 && letter != null){
+                let arg = `${letter}${eval(parseInt(this.position[1])+operator+"1")}`;
+                let killItem = document.querySelector(`.box[position="${arg}"]`);
+                if(killItem.firstChild){
+                    if(killItem.firstChild.classList.value.indexOf(colorKill) !== -1){
+                        killItem.onclick = this.kill.bind(this, arg);
+                        killItem.classList.add("possiblekill");
+                    }
+                }
+            }
         }
         
     }
 
-    possibleKill(newposition){
+    kill(newposition){
         this.position = newposition;
         let box = document.querySelector(`.box[position="${this.position}"]`);
         this.allpositions.push({position: this.position, kill: box.firstChild.classList[1]});
         box.firstChild.remove();
         box.appendChild(this.item);
-        
-        this.removePossible();
+        this.chessClass.removePossible();
+        this.chessClass.changePlayer();
     }
 
-    removePossible(){
-        let classList = ["possiblemove", "possiblekill"];
-        for (let c of classList) {
-            document.querySelectorAll(`.${c}`).forEach(item => {
-                if(item){
-                    item.classList.remove(c);
-                    item.onclick = function() {
-                        return false;
-                    }
-                }
-            })
-        }
-    }
+    
+
+
 }
