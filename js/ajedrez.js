@@ -8,6 +8,7 @@ class Chess {
 
   initialize(){
     this.loadPawns();
+    this.loadTowers();
   }
 
   loadPawns(){
@@ -20,6 +21,25 @@ class Chess {
       }
     };
     script.src = "js/pieces/pawn.js";
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  loadTowers(){
+    let towers = [{position: "A1", color: "white"}, {position: "H1", color: "white"}, {position: "A8", color: "black"}, {position: "H8", color: "black"}];
+    var script = document.createElement('script');
+    let obj = this;
+    script.onload = function() {
+      for (let t of towers) {
+        let item = new Tower(t.position, t.color, obj);
+        if(t.color == "white"){
+          obj.whitePieces.push(item);
+        } else {
+          obj.blackPieces.push(item);
+        }
+        
+      }
+    };
+    script.src = "js/pieces/tower.js";
     document.getElementsByTagName('head')[0].appendChild(script);
   }
 
@@ -47,7 +67,14 @@ class Chess {
             }
         })
     }
-}
+  }
+
+  // move(newposition, item){
+  //   this.position = newposition;
+  //   document.querySelector(`.box[position="${this.position}"]`).appendChild(item);
+  //   this.removePossible();
+  //   this.changePlayer();
+  // }
 
 
 }

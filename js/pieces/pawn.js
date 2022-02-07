@@ -5,7 +5,6 @@ class Pawn {
        
         this.allpositions = [{position: position}];
 
-        this.html = `<div class="piece ${this.color}-pawn"></div>`;
         this.item = document.createElement("div");
         this.item.className = `piece ${this.color}-pawn`;
         this.item.onclick = this.possibleMove.bind(this);
