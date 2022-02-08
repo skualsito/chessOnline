@@ -9,6 +9,8 @@ class Chess {
   initialize(){
     this.loadPawns();
     this.loadTowers();
+    this.loadHorses();
+    this.loadBishops();
   }
 
   loadPawns(){
@@ -40,6 +42,44 @@ class Chess {
       }
     };
     script.src = "js/pieces/tower.js";
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  loadHorses(){
+    let horses = [{position: "B1", color: "white"}, {position: "G1", color: "white"}, {position: "B8", color: "black"}, {position: "G8", color: "black"}];
+    var script = document.createElement('script');
+    let obj = this;
+    script.onload = function() {
+      for (let h of horses) {
+        let item = new Horse(h.position, h.color, obj);
+        if(h.color == "white"){
+          obj.whitePieces.push(item);
+        } else {
+          obj.blackPieces.push(item);
+        }
+        
+      }
+    };
+    script.src = "js/pieces/horse.js";
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  loadBishops(){
+    let bishops = [{position: "C1", color: "white"}, {position: "F1", color: "white"}, {position: "C8", color: "black"}, {position: "F8", color: "black"}];
+    var script = document.createElement('script');
+    let obj = this;
+    script.onload = function() {
+      for (let b of bishops) {
+        let item = new Bishop(b.position, b.color, obj);
+        if(b.color == "white"){
+          obj.whitePieces.push(item);
+        } else {
+          obj.blackPieces.push(item);
+        }
+        
+      }
+    };
+    script.src = "js/pieces/bishop.js";
     document.getElementsByTagName('head')[0].appendChild(script);
   }
 
