@@ -11,6 +11,8 @@ class Chess {
     this.loadTowers();
     this.loadHorses();
     this.loadBishops();
+    this.loadQueens();
+    this.loadKing();
   }
 
   loadPawns(){
@@ -80,6 +82,44 @@ class Chess {
       }
     };
     script.src = "js/pieces/bishop.js";
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  loadQueens(){
+    let queens = [{position: "E1", color: "white"}, {position: "E8", color: "black"}];
+    var script = document.createElement('script');
+    let obj = this;
+    script.onload = function() {
+      for (let q of queens) {
+        let item = new Queen(q.position, q.color, obj);
+        if(q.color == "white"){
+          obj.whitePieces.push(item);
+        } else {
+          obj.blackPieces.push(item);
+        }
+        
+      }
+    };
+    script.src = "js/pieces/queen.js";
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  loadKing(){
+    let kings = [{position: "D1", color: "white"}, {position: "D8", color: "black"}];
+    var script = document.createElement('script');
+    let obj = this;
+    script.onload = function() {
+      for (let k of kings) {
+        let item = new King(k.position, k.color, obj);
+        if(k.color == "white"){
+          obj.whitePieces.push(item);
+        } else {
+          obj.blackPieces.push(item);
+        }
+        
+      }
+    };
+    script.src = "js/pieces/king.js";
     document.getElementsByTagName('head')[0].appendChild(script);
   }
 
